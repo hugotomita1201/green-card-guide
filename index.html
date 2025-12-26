@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>雇用ベース永住権 - 申請の流れ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Japanese-inspired color palette */
+      --sumi: #1c1a18;           /* 墨色 - warm ink black */
+      --sumi-light: #2a2725;     /* lighter ink */
+      --sumi-lighter: #3d3936;   /* card background */
+      --kinari: #f5f2eb;         /* 生成り - natural cream */
+      --kinari-dim: #c9c4b8;     /* muted cream */
+      --nezumi: #8a857b;         /* 鼠色 - warm gray */
+      --ai: #2d4a6f;             /* 藍色 - indigo */
+      --ai-light: #4a6a8f;       /* lighter indigo */
+      --shu: #c4533b;            /* 朱色 - vermillion */
+      --matcha: #5a7a5a;         /* 抹茶 - muted green */
+      --border: rgba(245, 242, 235, 0.08);
+      --border-light: rgba(245, 242, 235, 0.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--sumi);
+      color: var(--kinari);
+      line-height: 1.8;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      /* Subtle paper texture */
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 40px;
+      position: relative;
+    }
+
+    .hero-label {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--nezumi);
+      margin-bottom: 40px;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+      color: var(--kinari);
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      color: var(--nezumi);
+      max-width: 480px;
+      margin-bottom: 60px;
+      line-height: 2;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 80px;
+      margin-bottom: 80px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--kinari);
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--nezumi);
+      letter-spacing: 0.15em;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      color: var(--nezumi);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--nezumi), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 0.8; transform: scaleY(1.2); }
+    }
+
+    /* Sticky Timeline */
+    .timeline-container {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(28, 26, 24, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .timeline-track {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 50%;
+      left: 40px;
+      right: 40px;
+      height: 1px;
+      background: var(--border-light);
+      transform: translateY(-50%);
+    }
+
+    .timeline-progress {
+      position: absolute;
+      top: 50%;
+      left: 40px;
+      height: 1px;
+      background: var(--ai);
+      transform: translateY(-50%);
+      width: 0%;
+      transition: width 0.6s ease;
+    }
+
+    .timeline-step {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--sumi);
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--nezumi);
+      transition: all 0.4s ease;
+    }
+
+    .timeline-step.active .timeline-dot {
+      background: var(--ai);
+      border-color: var(--ai);
+      color: var(--kinari);
+    }
+
+    .timeline-step.completed .timeline-dot {
+      background: var(--matcha);
+      border-color: var(--matcha);
+      color: var(--kinari);
+    }
+
+    .timeline-label {
+      font-size: 10px;
+      color: var(--nezumi);
+      letter-spacing: 0.1em;
+      transition: color 0.3s ease;
+    }
+
+    .timeline-step.active .timeline-label {
+      color: var(--kinari);
+    }
+
+    /* Content Sections */
+    .section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 140px 40px 100px;
+    }
+
+    .section-content {
+      max-width: 960px;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .section.visible .section-content {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-header {
+      margin-bottom: 60px;
+    }
+
+    .section-step {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      color: var(--ai-light);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .section-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(24px, 3.5vw, 32px);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    .section-subtitle {
+      font-size: 14px;
+      color: var(--nezumi);
+      letter-spacing: 0.03em;
+    }
+
+    .section-duration {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 8px 16px;
+      background: rgba(45, 74, 111, 0.15);
+      border: 1px solid rgba(45, 74, 111, 0.3);
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--ai-light);
+      letter-spacing: 0.05em;
+    }
+
+    /* Explanation Box */
+    .explanation-box {
+      background: var(--sumi-light);
+      border-left: 2px solid var(--ai);
+      padding: 28px 32px;
+      margin-bottom: 48px;
+    }
+
+    .explanation-box p {
+      font-size: 14px;
+      color: var(--kinari-dim);
+      line-height: 2;
+    }
+
+    /* Cards */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .step-card {
+      background: var(--sumi-lighter);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 28px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .step-card:hover {
+      background: #454240;
+      border-color: var(--border-light);
+    }
+
+    .step-card-letter {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ai-light);
+      margin-bottom: 16px;
+    }
+
+    .step-card h4 {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      letter-spacing: 0.03em;
+    }
+
+    .step-card p {
+      font-size: 13px;
+      color: var(--nezumi);
+      line-height: 1.8;
+    }
+
+    .step-card-duration {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 11px;
+      color: var(--nezumi);
+      letter-spacing: 0.05em;
+    }
+
+    .step-card-hint {
+      position: absolute;
+      bottom: 12px;
+      right: 16px;
+      font-size: 10px;
+      color: var(--ai-light);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      letter-spacing: 0.05em;
+    }
+
+    .step-card:hover .step-card-hint {
+      opacity: 1;
+    }
+
+    /* Comparison Section */
+    .comparison-intro {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto 48px;
+    }
+
+    .comparison-intro p {
+      font-size: 14px;
+      color: var(--nezumi);
+      line-height: 2;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .option-card {
+      background: var(--sumi-light);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 36px;
+      transition: all 0.4s ease;
+    }
+
+    .option-card:hover {
+      background: var(--sumi-lighter);
+      border-color: var(--border-light);
+    }
+
+    .option-card.option-a {
+      border-top: 2px solid var(--ai);
+    }
+
+    .option-card.option-b {
+      border-top: 2px solid var(--shu);
+    }
+
+    .option-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--nezumi);
+      margin-bottom: 8px;
+    }
+
+    .option-card h4 {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .option-card .option-subtitle {
+      font-size: 12px;
+      color: var(--nezumi);
+      margin-bottom: 20px;
+    }
+
+    .option-duration {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-bottom: 24px;
+      letter-spacing: 0.03em;
+    }
+
+    .option-a .option-duration {
+      background: rgba(45, 74, 111, 0.15);
+      color: var(--ai-light);
+    }
+
+    .option-b .option-duration {
+      background: rgba(196, 83, 59, 0.15);
+      color: var(--shu);
+    }
+
+    .option-steps {
+      list-style: none;
+    }
+
+    .option-steps li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--kinari-dim);
+    }
+
+    .option-steps li:last-child {
+      border-bottom: none;
+    }
+
+    .option-steps .num {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 14px;
+      color: var(--nezumi);
+      flex-shrink: 0;
+    }
+
+    /* Warning Box */
+    .warning-box {
+      background: rgba(196, 83, 59, 0.08);
+      border-left: 2px solid var(--shu);
+      padding: 16px 20px;
+      margin-top: 24px;
+    }
+
+    .warning-box p {
+      font-size: 12px;
+      color: var(--shu);
+      line-height: 1.8;
+    }
+
+    /* Summary Section */
+    .summary-section {
+      padding: 120px 40px;
+      text-align: center;
+    }
+
+    .summary-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      margin-bottom: 60px;
+    }
+
+    .summary-timeline {
+      max-width: 800px;
+      margin: 0 auto 60px;
+    }
+
+    .summary-bar {
+      display: flex;
+      height: 48px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .summary-segment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--kinari);
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+    }
+
+    .summary-segment:hover {
+      filter: brightness(1.15);
+    }
+
+    .seg-perm {
+      flex: 2.2;
+      background: var(--ai);
+    }
+
+    .seg-i140 {
+      flex: 0.25;
+      background: #4a5568;
+    }
+
+    .seg-final {
+      flex: 1;
+      background: var(--matcha);
+    }
+
+    .summary-total {
+      margin-top: 28px;
+      font-size: 14px;
+      color: var(--nezumi);
+      letter-spacing: 0.05em;
+    }
+
+    .summary-total strong {
+      color: var(--kinari);
+      font-weight: 500;
+    }
+
+    /* Key Points */
+    .key-points {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .key-point {
+      flex: 1;
+      min-width: 200px;
+      max-width: 240px;
+      text-align: left;
+      padding: 24px;
+      background: var(--sumi-light);
+      border-radius: 4px;
+    }
+
+    .key-point-icon {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .key-point h5 {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      letter-spacing: 0.03em;
+    }
+
+    .key-point p {
+      font-size: 12px;
+      color: var(--nezumi);
+      line-height: 1.8;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 48px 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    footer p {
+      font-size: 11px;
+      color: var(--nezumi);
+      letter-spacing: 0.05em;
+    }
+
+    /* Drawer */
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(28, 26, 24, 0.8);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .drawer-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 440px;
+      max-width: 90vw;
+      height: 100vh;
+      background: var(--sumi);
+      border-left: 1px solid var(--border);
+      z-index: 1001;
+      transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      overflow-y: auto;
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      padding: 32px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: sticky;
+      top: 0;
+      background: var(--sumi);
+      z-index: 1;
+    }
+
+    .drawer-title {
+      flex: 1;
+    }
+
+    .drawer-letter {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--ai-light);
+      margin-bottom: 8px;
+    }
+
+    .drawer-title h3 {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      letter-spacing: 0.03em;
+    }
+
+    .drawer-duration {
+      font-size: 12px;
+      color: var(--nezumi);
+    }
+
+    .drawer-close {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: transparent;
+      color: var(--nezumi);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .drawer-close:hover {
+      border-color: var(--kinari-dim);
+      color: var(--kinari);
+    }
+
+    .drawer-content {
+      padding: 32px;
+    }
+
+    .drawer-section {
+      margin-bottom: 32px;
+    }
+
+    .drawer-section h4 {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--ai-light);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .drawer-section p {
+      font-size: 14px;
+      color: var(--kinari-dim);
+      line-height: 2;
+    }
+
+    .drawer-list {
+      list-style: none;
+    }
+
+    .drawer-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--kinari-dim);
+      line-height: 1.7;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .drawer-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--nezumi);
+    }
+
+    .drawer-list li:last-child {
+      border-bottom: none;
+    }
+
+    .drawer-faq {
+      background: var(--sumi-light);
+      padding: 20px;
+      border-radius: 4px;
+      margin-top: 12px;
+    }
+
+    .drawer-faq .q {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      color: var(--kinari);
+    }
+
+    .drawer-faq .a {
+      font-size: 13px;
+      color: var(--nezumi);
+      line-height: 1.8;
+    }
+
+    .policy-box {
+      background: var(--sumi-light);
+      border-left: 2px solid var(--ai);
+      padding: 20px;
+      margin-top: 32px;
+    }
+
+    .policy-box h5 {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--ai-light);
+      margin-bottom: 16px;
+    }
+
+    .policy-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: var(--sumi);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      margin-top: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .policy-link:hover {
+      border-color: var(--ai);
+      background: var(--sumi-lighter);
+    }
+
+    .policy-link-title {
+      font-size: 13px;
+      color: var(--kinari);
+      margin-bottom: 2px;
+    }
+
+    .policy-link-ref {
+      font-size: 11px;
+      color: var(--nezumi);
+    }
+
+    .policy-link-arrow {
+      color: var(--ai-light);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-label">雇用ベース永住権申請</div>
+    <h1>永住権取得までの道のり</h1>
+    <p class="hero-subtitle">
+      雇用主スポンサーによる永住権申請は、<br>
+      数年にわたる長期プロセスです。<br>
+      全体の流れを分かりやすくご説明します。
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-value">4〜6年</div>
+        <div class="stat-label">所要期間</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">3段階</div>
+        <div class="stat-label">主要ステップ</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">1回</div>
+        <div class="stat-label">選択ポイント</div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>スクロール</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Sticky Timeline -->
+  <div class="timeline-container" id="timeline">
+    <div class="timeline-track">
+      <div class="timeline-line"></div>
+      <div class="timeline-progress" id="progress"></div>
+
+      <div class="timeline-step" data-step="1">
+        <div class="timeline-dot">1</div>
+        <div class="timeline-label">PERM</div>
+      </div>
+
+      <div class="timeline-step" data-step="2">
+        <div class="timeline-dot">2</div>
+        <div class="timeline-label">I-140</div>
+      </div>
+
+      <div class="timeline-step" data-step="3">
+        <div class="timeline-dot">3</div>
+        <div class="timeline-label">最終段階</div>
+      </div>
+
+      <div class="timeline-step" data-step="4">
+        <div class="timeline-dot">✓</div>
+        <div class="timeline-label">取得</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 1: PERM -->
+  <section class="section" id="step-1" data-step="1">
+    <div class="section-content">
+      <div class="section-header">
+        <div class="section-step">ステップ 1</div>
+        <h2 class="section-title">労働認定 (PERM)</h2>
+        <p class="section-subtitle">米国労働市場テストの実施</p>
+        <div class="section-duration">所要期間：約2年以上</div>
+      </div>
+
+      <div class="explanation-box">
+        <p>
+          外国人を永住者として雇用する前に、雇用主は米国人労働者を採用する努力を行ったことを証明する必要があります。これは申請者の資格の問題ではなく、誠実な求人活動を行った記録を残すことです。
+        </p>
+      </div>
+
+      <div class="cards-grid">
+        <div class="step-card" data-card="perm-a">
+          <div class="step-card-letter">A</div>
+          <h4>ケースプランニング</h4>
+          <p>職位要件・資格の確認と申請戦略の策定を行います。</p>
+          <div class="step-card-duration">約1.5ヶ月</div>
+          <span class="step-card-hint">詳細を見る →</span>
+        </div>
+
+        <div class="step-card" data-card="perm-b">
+          <div class="step-card-letter">B</div>
+          <h4>一般賃金査定</h4>
+          <p>労働省が申請ポジションの必要給与額を決定します。</p>
+          <div class="step-card-duration">約6〜8ヶ月</div>
+          <span class="step-card-hint">詳細を見る →</span>
+        </div>
+
+        <div class="step-card" data-card="perm-c">
+          <div class="step-card-letter">C</div>
+          <h4>求人手続き</h4>
+          <p>求人広告を出し、米国人応募者の審査・面接を行います。</p>
+          <div class="step-card-duration">約2ヶ月以上</div>
+          <span class="step-card-hint">詳細を見る →</span>
+        </div>
+
+        <div class="step-card" data-card="perm-d">
+          <div class="step-card-letter">D</div>
+          <h4>申請書提出</h4>
+          <p>労働認定申請書（ETA Form 9089）を労働省に提出します。</p>
+          <div class="step-card-duration">約13ヶ月</div>
+          <span class="step-card-hint">詳細を見る →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 2: I-140 -->
+  <section class="section" id="step-2" data-step="2">
+    <div class="section-content">
+      <div class="section-header">
+        <div class="section-step">ステップ 2</div>
+        <h2 class="section-title">移民ペティション (I-140)</h2>
+        <p class="section-subtitle">移民局による審査</p>
+        <div class="section-duration">所要期間：約2ヶ月以上</div>
+      </div>
+
+      <div class="explanation-box">
+        <p>
+          労働省から移民局（USCIS）へ手続きが移行します。移民局は雇用主の事業内容、給与支払い能力、そして申請者の資格を審査します。
+        </p>
+      </div>
+
+      <div class="cards-grid">
+        <div class="step-card" data-card="i140-1">
+          <div class="step-card-letter">1</div>
+          <h4>I-140申請書提出</h4>
+          <p>雇用主と申請者に関する書類と共に移民申請書を提出します。</p>
+          <span class="step-card-hint">詳細を見る →</span>
+        </div>
+
+        <div class="step-card" data-card="i140-2">
+          <div class="step-card-letter">2</div>
+          <h4>USCIS審査</h4>
+          <p>会社の財務状況、雇用条件、申請者の資格を審査します。</p>
+          <span class="step-card-hint">詳細を見る →</span>
+        </div>
+
+        <div class="step-card" data-card="i140-3">
+          <div class="step-card-letter">3</div>
+          <h4>承認</h4>
+          <p>承認後、最終段階へ進みます。ここで重要な選択があります。</p>
+          <span class="step-card-hint">詳細を見る →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 3: Final Choice -->
+  <section class="section" id="step-3" data-step="3">
+    <div class="section-content">
+      <div class="section-header">
+        <div class="section-step">ステップ 3</div>
+        <h2 class="section-title">最終段階</h2>
+        <p class="section-subtitle">2つの選択肢</p>
+      </div>
+
+      <div class="comparison-intro">
+        <p>
+          申請者は米国外で移民ビザを取得するか、米国内でステータスを調整するか選択できます。それぞれにメリット・デメリットがあります。
+        </p>
+      </div>
+
+      <div class="comparison-grid">
+        <div class="option-card option-a" data-card="iv" style="cursor: pointer;">
+          <div class="option-label">オプション A</div>
+          <h4>移民ビザ</h4>
+          <p class="option-subtitle">米国外での手続き</p>
+          <div class="option-duration">約6ヶ月以上</div>
+          <ul class="option-steps">
+            <li><span class="num">1.</span> NVCへ書類提出</li>
+            <li><span class="num">2.</span> 健康診断・予防接種</li>
+            <li><span class="num">3.</span> 大使館での面接</li>
+            <li><span class="num">4.</span> ビザ発給 → 渡米 → GC郵送</li>
+          </ul>
+          <div class="step-card-hint" style="position: static; opacity: 0.6; margin-top: 16px;">詳細を見る →</div>
+        </div>
+
+        <div class="option-card option-b" data-card="aos" style="cursor: pointer;">
+          <div class="option-label">オプション B</div>
+          <h4>ステータス調整</h4>
+          <p class="option-subtitle">米国内での手続き</p>
+          <div class="option-duration">約1.5年以上</div>
+          <ul class="option-steps">
+            <li><span class="num">1.</span> I-485申請書提出</li>
+            <li><span class="num">2.</span> 就労許可・渡航許可取得</li>
+            <li><span class="num">3.</span> USCIS面接（省略の場合あり）</li>
+            <li><span class="num">4.</span> 承認 → GC郵送</li>
+          </ul>
+
+          <div class="warning-box">
+            <p><strong>Eビザの方へ：</strong>渡航許可（I-131）承認前に出国すると、申請が放棄とみなされます。ご注意ください。</p>
+          </div>
+          <div class="step-card-hint" style="position: static; opacity: 0.6; margin-top: 16px;">詳細を見る →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Summary -->
+  <section class="summary-section" id="summary">
+    <h2 class="summary-title">全体の流れ</h2>
+
+    <div class="summary-timeline">
+      <div class="summary-bar">
+        <div class="summary-segment seg-perm">PERM（約2年）</div>
+        <div class="summary-segment seg-i140">I-140</div>
+        <div class="summary-segment seg-final">最終段階</div>
+      </div>
+      <p class="summary-total">申請開始から取得まで：<strong>約4〜6年</strong></p>
+    </div>
+
+    <div class="key-points">
+      <div class="key-point">
+        <div class="key-point-icon">⚠</div>
+        <h5>給与義務</h5>
+        <p>永住権取得時から、一般賃金以上の支払いが必要です。</p>
+      </div>
+      <div class="key-point">
+        <div class="key-point-icon">📋</div>
+        <h5>審査期間</h5>
+        <p>期間は目安です。追加資料請求により延長する場合があります。</p>
+      </div>
+      <div class="key-point">
+        <div class="key-point-icon">💡</div>
+        <h5>早期開始</h5>
+        <p>早めの計画開始をお勧めします。選択肢が広がります。</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>本ガイドは一般的な情報提供を目的としています。個別のケースについては担当弁護士にご相談ください。</p>
+  </footer>
+
+  <!-- Drawer -->
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+  <div class="drawer" id="drawer">
+    <div class="drawer-header">
+      <div class="drawer-title">
+        <div class="drawer-letter" id="drawer-letter">A</div>
+        <h3 id="drawer-title-text">ケースプランニング</h3>
+        <div class="drawer-duration" id="drawer-duration">約1.5ヶ月</div>
+      </div>
+      <button class="drawer-close" id="drawer-close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="drawer-content" id="drawer-content"></div>
+  </div>
+
+  <script>
+    const cardData = {
+      'perm-a': {
+        letter: 'A',
+        title: 'ケースプランニング',
+        duration: '約1.5ヶ月',
+        content: `
+          <div class="drawer-section">
+            <h4>この段階について</h4>
+            <p>移民弁護士が雇用主と協力し、ポジションを分析してPERM申請の戦略を策定します。職務要件の定義、適切なEBカテゴリー（EB-2またはEB-3）の決定、申請者が最低要件を満たしていることの確認を行います。</p>
+          </div>
+          <div class="drawer-section">
+            <h4>雇用主が行うこと</h4>
+            <ul class="drawer-list">
+              <li>詳細な職務記述書と要件の提供</li>
+              <li>必要な学歴・経験の確認</li>
+              <li>組織図の提供</li>
+              <li>提案される給与レンジの確認・承認</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>申請者が準備するもの</h4>
+            <ul class="drawer-list">
+              <li>完全な職歴を記載した履歴書</li>
+              <li>学歴証明書（卒業証書、成績証明書）のコピー</li>
+              <li>過去の雇用主からの経験証明書</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>よくある質問</h4>
+            <div class="drawer-faq">
+              <div class="q">Q: 職務要件はカスタマイズできますか？</div>
+              <div class="a">はい。ただし、要件は職務の実際の最低限の必要性を反映する必要があります。申請者だけに合わせた要件は労働省の審査対象となります。</div>
+            </div>
+          </div>
+          <div class="policy-box">
+            <h5>関連法規</h5>
+            <a href="https://www.ecfr.gov/current/title-20/chapter-V/part-656" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">DOL PERM規則</div>
+                <div class="policy-link-ref">20 CFR Part 656</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+          </div>
+        `
+      },
+      'perm-b': {
+        letter: 'B',
+        title: '一般賃金査定',
+        duration: '約6〜8ヶ月',
+        content: `
+          <div class="drawer-section">
+            <h4>この段階について</h4>
+            <p>労働省が職務内容、勤務地、必要な資格に基づいて「一般賃金」を決定します。これは永住権取得後に法的に支払う義務のある最低給与額となります。</p>
+          </div>
+          <div class="drawer-section">
+            <h4>重要な義務</h4>
+            <div class="warning-box">
+              <p><strong>この賃金は拘束力があります。</strong>永住権が承認された時点から、この賃金以上を支払わなければなりません。また、この賃金を支払う財務能力を証明する必要があります。</p>
+            </div>
+          </div>
+          <div class="drawer-section">
+            <h4>一般賃金に影響する要素</h4>
+            <ul class="drawer-list">
+              <li>勤務地（都市部により大きく異なる）</li>
+              <li>ポジションレベル（初級〜熟練）</li>
+              <li>職務内容と責任</li>
+              <li>必要な学歴と経験</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>よくある質問</h4>
+            <div class="drawer-faq">
+              <div class="q">Q: すでに一般賃金以上を支払っている場合は？</div>
+              <div class="a">問題ありません。その賃金水準を維持するだけです。一般賃金は下限であり、上限ではありません。</div>
+            </div>
+          </div>
+          <div class="policy-box">
+            <h5>関連法規</h5>
+            <a href="https://www.ecfr.gov/current/title-20/chapter-V/part-656/subpart-B/section-656.40" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">一般賃金決定</div>
+                <div class="policy-link-ref">20 CFR 656.40</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+            <a href="https://flag.dol.gov/programs/prevailing-wage" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">DOL FLAGシステム</div>
+                <div class="policy-link-ref">外国人労働申請ゲートウェイ</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+          </div>
+        `
+      },
+      'perm-c': {
+        letter: 'C',
+        title: '求人手続き',
+        duration: '約2ヶ月以上',
+        content: `
+          <div class="drawer-section">
+            <h4>この段階について</h4>
+            <p>雇用主は米国労働市場をテストするための真正な求人活動を行います。求人広告を出し、応募を収集し、候補者を面接します。目的は、そのポジションに適格で、意思があり、対応可能な米国人労働者が存在しないことを記録することです。</p>
+          </div>
+          <div class="drawer-section">
+            <h4>必須の求人手続き</h4>
+            <ul class="drawer-list">
+              <li>州労働局への求人登録（30日間）</li>
+              <li>日曜日の新聞広告2回</li>
+              <li>会社ウェブサイトまたは求人サイトへの30日間掲載</li>
+              <li>専門職の場合：追加の3つの求人方法</li>
+              <li>現従業員への社内掲示</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>雇用主が記録すべきこと</h4>
+            <ul class="drawer-list">
+              <li>受領・審査したすべての履歴書</li>
+              <li>面接メモと結果</li>
+              <li>各米国人応募者を不採用とした具体的・合法的な理由</li>
+              <li>すべての広告のコピー</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>よくある質問</h4>
+            <div class="drawer-faq">
+              <div class="q">Q: 適格な米国人労働者が応募した場合は？</div>
+              <div class="a">適格で、意思があり、対応可能な米国人労働者が応募し、合法的に不採用にできない場合、PERMプロセスを再検討する必要があるかもしれません。これがケースプランニングが重要な理由です。</div>
+            </div>
+          </div>
+          <div class="policy-box">
+            <h5>関連法規</h5>
+            <a href="https://www.ecfr.gov/current/title-20/chapter-V/part-656/subpart-C/section-656.17" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">求人要件</div>
+                <div class="policy-link-ref">20 CFR 656.17(e)</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+          </div>
+        `
+      },
+      'perm-d': {
+        letter: 'D',
+        title: '申請書提出',
+        duration: '約13ヶ月',
+        content: `
+          <div class="drawer-section">
+            <h4>この段階について</h4>
+            <p>求人活動完了後、ETA Form 9089（永住労働認定申請書）を準備し、労働省に提出します。その後、労働省の審査を待ちます。</p>
+          </div>
+          <div class="drawer-section">
+            <h4>申請書の内容</h4>
+            <ul class="drawer-list">
+              <li>詳細な職務記述と要件</li>
+              <li>一般賃金情報</li>
+              <li>求人活動結果の概要</li>
+              <li>申請者の資格</li>
+              <li>雇用主の宣誓</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>審査結果</h4>
+            <ul class="drawer-list">
+              <li><strong>認定：</strong>承認。I-140段階へ進む</li>
+              <li><strong>監査：</strong>労働省が追加書類を要求</li>
+              <li><strong>却下：</strong>異議申立てまたはプロセス再開が可能</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>よくある質問</h4>
+            <div class="drawer-faq">
+              <div class="q">Q: なぜ13ヶ月もかかるのですか？</div>
+              <div class="a">労働省の処理時間は業務量により変動します。現在、滞留案件が多い状況です。PERMにはプレミアム処理はありません。</div>
+            </div>
+          </div>
+          <div class="policy-box">
+            <h5>関連法規</h5>
+            <a href="https://www.ecfr.gov/current/title-20/chapter-V/part-656/subpart-C/section-656.17" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">申請要件</div>
+                <div class="policy-link-ref">20 CFR 656.17</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+            <a href="https://flag.dol.gov/processingtimes" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">現在の処理時間</div>
+                <div class="policy-link-ref">DOL FLAG 処理時間</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+          </div>
+        `
+      },
+
+      // I-140 Section
+      'i140-1': {
+        letter: '1',
+        title: 'I-140申請書提出',
+        duration: '準備期間：約2〜4週間',
+        content: `
+          <div class="drawer-section">
+            <h4>この段階について</h4>
+            <p>PERM承認後、雇用主は「移民労働者ペティション」（Form I-140）を移民局（USCIS）に提出します。これは、雇用主が外国人労働者を永住者として雇用する意思を正式に申請するものです。</p>
+          </div>
+          <div class="drawer-section">
+            <h4>雇用主が準備する書類</h4>
+            <ul class="drawer-list">
+              <li>承認済みPERM労働認定書のコピー</li>
+              <li>会社の財務書類（納税申告書、監査報告書等）</li>
+              <li>会社概要と事業説明</li>
+              <li>求人広告の写しと求人活動の記録</li>
+              <li>申請料（現在$715、プレミアム処理の場合追加$2,805）</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>申請者が準備する書類</h4>
+            <ul class="drawer-list">
+              <li>学位証明書と成績証明書</li>
+              <li>学歴認証（外国の学位の場合）</li>
+              <li>職歴証明書（過去の雇用主からの在職証明）</li>
+              <li>パスポートのコピー</li>
+              <li>現在のビザステータスの証明</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>よくある質問</h4>
+            <div class="drawer-faq">
+              <div class="q">Q: プレミアム処理とは何ですか？</div>
+              <div class="a">追加料金（$2,805）を支払うことで、15営業日以内に審査結果が出ます。急ぎの場合や、ビザの有効期限が迫っている場合に有効です。</div>
+            </div>
+          </div>
+          <div class="policy-box">
+            <h5>関連法規</h5>
+            <a href="https://www.uscis.gov/i-140" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">Form I-140 概要</div>
+                <div class="policy-link-ref">USCIS公式ページ</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+            <a href="https://www.uscis.gov/policy-manual/volume-6-part-e" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">雇用ベース移民</div>
+                <div class="policy-link-ref">USCIS Policy Manual Vol 6, Part E</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+          </div>
+        `
+      },
+      'i140-2': {
+        letter: '2',
+        title: 'USCIS審査',
+        duration: '通常処理：約2〜6ヶ月',
+        content: `
+          <div class="drawer-section">
+            <h4>この段階について</h4>
+            <p>移民局（USCIS）が申請内容を詳細に審査します。労働省とは異なり、移民局は雇用主の事業と財務状況、そして申請者の資格を厳密に確認します。</p>
+          </div>
+          <div class="drawer-section">
+            <h4>USCISが審査する項目</h4>
+            <ul class="drawer-list">
+              <li><strong>雇用主の財務能力：</strong>一般賃金を支払い続ける能力があるか</li>
+              <li><strong>事業の正当性：</strong>会社が実際に事業を行っているか</li>
+              <li><strong>雇用条件：</strong>ポジションが存在し、永続的なものか</li>
+              <li><strong>申請者の資格：</strong>学歴・職歴がポジション要件を満たすか</li>
+              <li><strong>PERM申請との整合性：</strong>内容に矛盾がないか</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>追加資料請求（RFE）</h4>
+            <p>審査中に疑問点があれば、移民局から「追加資料請求」（Request for Evidence）が届くことがあります。通常30〜90日以内に回答が必要です。</p>
+            <ul class="drawer-list">
+              <li>財務書類の追加提出要求</li>
+              <li>学歴認証の詳細</li>
+              <li>職歴証明の補足</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>よくある質問</h4>
+            <div class="drawer-faq">
+              <div class="q">Q: 審査中に転職できますか？</div>
+              <div class="a">I-140承認前の転職は原則として不可です。承認後は、一定の条件下で「ポータビリティ」（I-140の移行）が可能な場合があります。</div>
+            </div>
+          </div>
+          <div class="policy-box">
+            <h5>関連法規</h5>
+            <a href="https://www.uscis.gov/policy-manual/volume-6-part-e-chapter-4" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">I-140審査基準</div>
+                <div class="policy-link-ref">USCIS Policy Manual Vol 6, Part E, Ch 4</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+            <a href="https://egov.uscis.gov/processing-times/" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">現在の処理時間</div>
+                <div class="policy-link-ref">USCIS Processing Times</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+          </div>
+        `
+      },
+      'i140-3': {
+        letter: '3',
+        title: '承認後の選択',
+        duration: '次のステップへ',
+        content: `
+          <div class="drawer-section">
+            <h4>この段階について</h4>
+            <p>I-140が承認されると、「優先日」（Priority Date）が確定します。これは永住権申請の「予約番号」のようなもので、最終段階に進むための重要な日付です。</p>
+          </div>
+          <div class="drawer-section">
+            <h4>優先日とビザ番号</h4>
+            <p>米国は毎年の永住権発行数に上限を設けています。申請者の出身国によっては、ビザ番号が利用可能になるまで待機が必要な場合があります。</p>
+            <ul class="drawer-list">
+              <li><strong>ビザブレティン：</strong>毎月国務省が発行する優先日の進行状況</li>
+              <li><strong>待機期間：</strong>国によっては数年〜数十年の待機も</li>
+              <li><strong>日本国籍：</strong>現在、待機期間はほぼなし</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>次のステップの選択</h4>
+            <p>ビザ番号が利用可能になったら、以下の2つの方法から選択します：</p>
+            <ul class="drawer-list">
+              <li><strong>移民ビザ（IV）：</strong>米国外の大使館で手続き</li>
+              <li><strong>ステータス調整（AOS）：</strong>米国内で手続き</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>よくある質問</h4>
+            <div class="drawer-faq">
+              <div class="q">Q: I-140承認後に転職したらどうなりますか？</div>
+              <div class="a">I-140承認後180日以上経過していれば、同種の職種への転職時に優先日を維持できる場合があります（「ポータビリティ」）。ただし、新しい雇用主が新たなPERMとI-140を申請する必要があります。</div>
+            </div>
+          </div>
+          <div class="policy-box">
+            <h5>関連法規</h5>
+            <a href="https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin.html" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">ビザブレティン</div>
+                <div class="policy-link-ref">国務省 月次発行</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+            <a href="https://www.uscis.gov/green-card/green-card-eligibility/green-card-for-employment-based-immigrants" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">雇用ベース永住権</div>
+                <div class="policy-link-ref">USCIS 概要ページ</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+          </div>
+        `
+      },
+
+      // Final Choice Section
+      'iv': {
+        letter: 'A',
+        title: '移民ビザ（IV）',
+        duration: '約6ヶ月以上',
+        content: `
+          <div class="drawer-section">
+            <h4>この選択肢について</h4>
+            <p>「移民ビザ」は、米国外（通常は申請者の母国）にある米国大使館で永住権を取得する方法です。「領事処理」（Consular Processing）とも呼ばれます。</p>
+          </div>
+          <div class="drawer-section">
+            <h4>手続きの流れ</h4>
+            <ul class="drawer-list">
+              <li><strong>1. NVC登録：</strong>国務省のナショナルビザセンター（NVC）にケースが移行</li>
+              <li><strong>2. 書類提出：</strong>DS-260（オンライン申請書）、財務証明、民事書類を提出</li>
+              <li><strong>3. 健康診断：</strong>指定医療機関で健康診断と予防接種</li>
+              <li><strong>4. 面接：</strong>大使館で面接、ビザスタンプ取得</li>
+              <li><strong>5. 渡米：</strong>ビザ有効期間内に入国、入国時に永住権が有効化</li>
+              <li><strong>6. GC郵送：</strong>入国後数週間で永住権カードが郵送</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>メリット</h4>
+            <ul class="drawer-list">
+              <li>処理時間が比較的短い（約6ヶ月）</li>
+              <li>面接日程が明確</li>
+              <li>入国時点で永住権が有効</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>デメリット</h4>
+            <ul class="drawer-list">
+              <li>渡航が必要（日本での面接）</li>
+              <li>現在の米国ビザステータスに影響する可能性</li>
+              <li>面接不合格のリスク</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>よくある質問</h4>
+            <div class="drawer-faq">
+              <div class="q">Q: 日本のどこで面接を受けますか？</div>
+              <div class="a">移民ビザの面接は東京の米国大使館で行われます。大阪の総領事館では移民ビザ面接は行っていません。</div>
+            </div>
+          </div>
+          <div class="policy-box">
+            <h5>関連法規</h5>
+            <a href="https://travel.state.gov/content/travel/en/us-visas/immigrate/the-immigrant-visa-process.html" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">移民ビザプロセス</div>
+                <div class="policy-link-ref">国務省 公式ガイド</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+            <a href="https://travel.state.gov/content/travel/en/us-visas/immigrate/the-immigrant-visa-process/interview/interview-prepare.html" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">面接準備</div>
+                <div class="policy-link-ref">国務省 面接ガイド</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+            <a href="https://fam.state.gov/fam/09FAM/09FAM050201.html" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">領事処理規則</div>
+                <div class="policy-link-ref">9 FAM 502.1</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+          </div>
+        `
+      },
+      'aos': {
+        letter: 'B',
+        title: 'ステータス調整（AOS）',
+        duration: '約1.5年以上',
+        content: `
+          <div class="drawer-section">
+            <h4>この選択肢について</h4>
+            <p>「ステータス調整」（Adjustment of Status）は、米国内にいながら永住権を取得する方法です。現在の非移民ステータスから永住者ステータスへ「調整」します。</p>
+          </div>
+          <div class="drawer-section">
+            <h4>手続きの流れ</h4>
+            <ul class="drawer-list">
+              <li><strong>1. I-485提出：</strong>ステータス調整申請書を移民局に提出</li>
+              <li><strong>2. 生体認証：</strong>指紋採取と写真撮影（バイオメトリクス）</li>
+              <li><strong>3. 就労許可：</strong>I-765で就労許可証（EAD）を取得</li>
+              <li><strong>4. 渡航許可：</strong>I-131で事前渡航許可（Advance Parole）を取得</li>
+              <li><strong>5. 面接：</strong>移民局オフィスで面接（省略される場合あり）</li>
+              <li><strong>6. 承認：</strong>承認後、永住権カードが郵送</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>メリット</h4>
+            <ul class="drawer-list">
+              <li>渡航不要（米国内で完結）</li>
+              <li>就労許可証（EAD）で転職の柔軟性</li>
+              <li>渡航許可証で海外渡航も可能</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>デメリット</h4>
+            <ul class="drawer-list">
+              <li>処理時間が長い（約1.5年以上）</li>
+              <li>申請中のビザステータス管理が複雑</li>
+              <li>追加申請料（EAD、渡航許可）</li>
+            </ul>
+          </div>
+          <div class="drawer-section">
+            <h4>⚠️ 重要な注意事項</h4>
+            <div class="warning-box">
+              <p><strong>Eビザ保有者の方へ：</strong>I-485申請中に渡航許可（I-131）の承認前に米国外へ出国すると、I-485申請は放棄とみなされます。H-1BやL-1ビザとは異なり、Eビザには「デュアルインテント」の保護がないため、特に注意が必要です。</p>
+            </div>
+          </div>
+          <div class="drawer-section">
+            <h4>よくある質問</h4>
+            <div class="drawer-faq">
+              <div class="q">Q: EADがあれば転職できますか？</div>
+              <div class="a">はい、EADがあれば雇用主を問わず就労できます。ただし、永住権申請の基礎となった雇用関係が継続する必要があるため、転職のタイミングについては弁護士に相談してください。</div>
+            </div>
+          </div>
+          <div class="policy-box">
+            <h5>関連法規</h5>
+            <a href="https://www.uscis.gov/i-485" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">Form I-485 概要</div>
+                <div class="policy-link-ref">USCIS公式ページ</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+            <a href="https://www.uscis.gov/policy-manual/volume-7-part-a" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">ステータス調整</div>
+                <div class="policy-link-ref">USCIS Policy Manual Vol 7, Part A</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+            <a href="https://www.uscis.gov/i-765" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">就労許可証（EAD）</div>
+                <div class="policy-link-ref">Form I-765</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+            <a href="https://www.uscis.gov/i-131" target="_blank" class="policy-link">
+              <div>
+                <div class="policy-link-title">渡航許可証</div>
+                <div class="policy-link-ref">Form I-131</div>
+              </div>
+              <span class="policy-link-arrow">→</span>
+            </a>
+          </div>
+        `
+      }
+    };
+
+    // Drawer functionality
+    const drawer = document.getElementById('drawer');
+    const drawerOverlay = document.getElementById('drawer-overlay');
+    const drawerClose = document.getElementById('drawer-close');
+
+    function openDrawer(cardId) {
+      const data = cardData[cardId];
+      if (!data) return;
+
+      document.getElementById('drawer-letter').textContent = data.letter;
+      document.getElementById('drawer-title-text').textContent = data.title;
+      document.getElementById('drawer-duration').textContent = data.duration;
+      document.getElementById('drawer-content').innerHTML = data.content;
+
+      drawer.classList.add('open');
+      drawerOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      drawerOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.step-card[data-card], .option-card[data-card]').forEach(card => {
+      card.addEventListener('click', () => openDrawer(card.dataset.card));
+    });
+
+    drawerClose.addEventListener('click', closeDrawer);
+    drawerOverlay.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+    // Timeline & scroll
+    const sections = document.querySelectorAll('.section');
+    const timelineSteps = document.querySelectorAll('.timeline-step');
+    const progress = document.getElementById('progress');
+    const timeline = document.getElementById('timeline');
+    const hero = document.getElementById('hero');
+
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          const step = entry.target.dataset.step;
+          if (step) updateTimeline(step);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    sections.forEach(s => sectionObserver.observe(s));
+
+    function updateTimeline(current) {
+      timelineSteps.forEach(step => {
+        const num = step.dataset.step;
+        step.classList.remove('active', 'completed');
+        if (num < current) step.classList.add('completed');
+        else if (num == current) step.classList.add('active');
+      });
+      progress.style.width = ((current - 1) / 3 * 100) + '%';
+    }
+
+    timelineSteps.forEach(step => {
+      step.addEventListener('click', () => {
+        const target = document.getElementById('step-' + step.dataset.step);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    const heroObserver = new IntersectionObserver(entries => {
+      timeline.style.opacity = entries[0].isIntersecting ? '0' : '1';
+      timeline.style.pointerEvents = entries[0].isIntersecting ? 'none' : 'auto';
+    }, { threshold: 0.5 });
+
+    heroObserver.observe(hero);
+    timeline.style.opacity = '0';
+    timeline.style.transition = 'opacity 0.4s ease';
+  </script>
+
+</body>
+</html>
